@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    margin: auto;
+    width: 50%;
+}
+
+form input, form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    display: inline-block;
+    margin: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.task-card {
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.task-card.even {
+    background-color: #f9f9f9;
+}
+
+.task-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.task-card.odd {
+    background-color: #e9e9e9;
+}
+
+.task-actions .btn {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-left: 10px;
+    color: #fff;
+    border-radius: 3px;
+}
+
+.btn.edit {
+    background-color: blue;
+}
+
+.btn.delete {
+    background-color: red;
+}
+
+.btn.done {
+    background-color: green;
+}
+
+.btn.todo {
+    background-color: purple;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.status.todo {
+    color: purple;
+}
+
+.status.done {
+    color: green;
+}
+
+.inline-form {
+    display: inline-block;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Title</title>
+</head>
+<body>
+    <form method="POST">
+        <label for="username">Username</label>
+        <input type="text" name="username" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" required>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <button type="submit">Sign Up</button>
+        <a href="{{ url_for('login') }}">Already have an account? Login</a>
+    </form>
+</body>
+</html>

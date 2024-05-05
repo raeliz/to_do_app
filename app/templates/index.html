@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Title</title>
+</head>
+<body>
+<div class="header">
+    <h1>Welcome, {{ current_user.username }}!</h1>
+    <div>
+        <a href="{{ url_for('new_task') }}" class="btn">New Task</a>
+        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+    </div>
+</div>
+{% if tasks %}
+    {% for task in tasks %}
+        <div class="task-card {% if loop.index % 2 == 0 %}even{% else %}odd{% endif %}">
+            <div class="task-top-row">
+                <h2>{{ task.title }}</h2>
+                <div class="task-actions">
+                    <!-- Edit button -->
+                    {% if not task.is_done %}
+                        <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn edit">Edit</a>
+                    {% endif %}
+                    <!-- Delete button -->
+                    <form action="{{ url_for('delete_task', task_id=task.id) }}" method="POST" class="inline-form">
+                        <button type="submit" class="btn delete">Delete</button>
+                    </form>
+                    <!-- Mark as done/to do button -->
+                    {% if not task.is_done %}
+                        <a href="{{ url_for('done_task', task_id=task.id) }}" class="btn done">Mark as Done</a>
+                    {% else %}
+                        <a href="{{ url_for('todo_task', task_id=task.id) }}" class="btn todo">Mark as To Do</a>
+                    {% endif %}
+                </div>
+            </div>
+            <p>{{ task.description }}</p>
+            <p class="status {{ 'done' if task.is_done else 'todo' }}">Status: {{ 'Done' if task.is_done else 'To Do' }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>You currently have no tasks</p>
+{% endif %}
+</body>
+</html>
