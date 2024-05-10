@@ -1,3 +1,7 @@
+# To-Do Application tested with Playwright
+
+Hi there! This is a starter project that I am using to practice and learn Playwright and testing automation as a whole. 
+
 # Project Setup & Running Instructions
 
 This project uses Python 3.9
