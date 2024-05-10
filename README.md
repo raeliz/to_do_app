@@ -1,6 +1,6 @@
 # To-Do Application tested with Playwright
 
-Hi there! This is a starter project that I am using to practice and learn Playwright and testing automation as a whole. 
+Hi there! This is a starter project that I am using to practice and learn Playwright and testing automation as a whole. I also use the command `npx playwright test --workers 1` to run the project in order.
 
 # Project Setup & Running Instructions
 
