@@ -1,0 +1,24 @@
+{
+  "name": "rachel-todo",
+  "version": "1.0.0",
+  "description": "Hi there! This is a starter project that I am using to practice and learn Playwright and testing automation as a whole.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raeliz/to_do_app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raeliz/to_do_app/issues"
+  },
+  "homepage": "https://github.com/raeliz/to_do_app#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "playwright": "^1.44.0"
+  }
+}

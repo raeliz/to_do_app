@@ -1,0 +1,13 @@
+
+this is where i will place my test plan for the auth process:
+
+
+I will navigate to the site and inspect all visible elements
+
+I will sign up as a new user navigating here for the first time
+
+I will input a username and password in the corresponding text boxes and then select "sign up"
+
+I will log in using credentials just created
+
+I will then log out
