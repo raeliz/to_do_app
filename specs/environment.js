@@ -10,3 +10,5 @@ export const password = `password`
 
 export const taskTitle = `Task Title: ${Date.now()}`
 export const taskDescription = `New task description`
+export const editedTaskTitle = `Edited Task Title: ${Date.now()}`
+export const editedTaskDescription = `Edited task description`
