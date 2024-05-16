@@ -1,6 +1,6 @@
 // // @ts-check
 import { test, expect } from '@playwright/test'
-import { url, loginQueryPath, signupPath, loginPath, username, password } from '../../environment'
+import { url, loginQueryPath, username, password } from '../../environment'
 
 // navigating to the site and verifying the url is correct and expected
 test.beforeEach(async ({ page }) => {
@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
 
 test('my test', async ({ page }) => {
     expect(page.url()).toBe(loginQueryPath)
-})
+});
 
 // logout
 test('logout', async ({ page }) => {
@@ -23,24 +23,3 @@ test('logout', async ({ page }) => {
     await expect(page.url()).toBe(loginQueryPath)
     await expect(page.getByText("Please log in to access this page.")).toBeVisible()
 });
-
-
-
-
-
-
-// Arrange:
-
-
-
-// Act:
-// Click "Logout" button
-
-// Assert:
-// Assert landed on login page ("Login" button is visible)
-
-// Assert "Please log in to access this page." message is visible
-
-// Assert "SignUp" link is visible
-
-// Assert url contains "login"
