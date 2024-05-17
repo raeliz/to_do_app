@@ -1,6 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test'
-import { url, loginQueryPath, username, password, taskTitle, taskDescription, editedTaskTitle, editedTaskDescription } from '../environment'
+import { url, loginQueryPath, username, password } from '../environment'
 
 // navigating to the site and verifying the url is correct and expected
 test.beforeEach(async ({ page }) => {
