@@ -1,6 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test'
 import { url, loginQueryPath, username, password } from '../environment'
+import { loginForm } from '../utils/login';
 
 // navigating to the site and verifying the url is correct and expected
 test.beforeEach(async ({ page }) => {
@@ -14,9 +15,7 @@ test('my test', async ({ page }) => {
 // mark task as done
 test('mark task as done', async ({ page }) => {
 // login
-    await page.locator('input#test-username').fill(username)
-    await page.locator('input#test-password').fill(password)
-    await page.locator('button#test-login-button').click()
+    await loginForm(page, username, password)
     await expect(page.url()).toBe(`${url}/`)
     
     await page.getByRole('link', { name: "Mark as Done" }).click()

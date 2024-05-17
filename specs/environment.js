@@ -1,4 +1,4 @@
-export const url = 'http://192.168.1.23:9090'
+export const url = 'http://127.0.0.1:9090'
 
 export const loginQueryPath = `${url}/login?next=%2F`
 export const loginPath = `${url}/login`

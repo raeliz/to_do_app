@@ -1,6 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test'
 import { url, loginQueryPath, signupPath, loginPath, username, password } from '../../environment'
+import { signupForm } from '../../utils/signup';
 
 // navigating to the site and verifying the url is correct and expected
 test.beforeEach(async ({ page }) => {
@@ -31,10 +32,7 @@ test('signup', async ({ page }) => {
         
     await expect(page.url()).toBe(signupPath)
 
-    await page.locator('input[ name="username" ]').fill(username)
-    await page.locator('input[ name="password" ]').fill(password)
-
-    await page.getByRole('button', { name: "Sign Up" }).click()
+    await signupForm(page, username, password)
         
     await expect(page.getByRole('button', { name: 'Log In' })).toBeVisible()
     await expect(page.getByRole('button', { name: 'Sign Up' })).toBeHidden()
@@ -45,10 +43,7 @@ test('signup', async ({ page }) => {
 test('cannot sign up twice', async ({ page }) => {
     await page.goto(signupPath)
     
-    await page.locator('input[ name="username" ]').fill(username)
-    await page.locator('input[ name="password" ]').fill(password)
-
-    await page.getByRole('button', { name: "Sign Up" }).click()
+    await signupForm(page, username, password)
     
     await expect(page.getByText("Username already exists.")).toBeVisible()
 });
