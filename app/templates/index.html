@@ -1,3 +1,4 @@
+{% from 'macros.html' import header %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,19 +8,16 @@
     <title>Title</title>
 </head>
 <body>
-<div class="header">
-    <h1>Welcome, {{ current_user.username }}!</h1>
-    <div>
-        <a href="{{ url_for('new_task') }}" class="btn">New Task</a>
-        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-    </div>
-</div>
+{{ header('index', username, preferred_name) }}
+
 {% if tasks %}
     {% for task in tasks %}
         <div class="task-card {% if loop.index % 2 == 0 %}even{% else %}odd{% endif %}">
             <div class="task-top-row">
                 <h2>{{ task.title }}</h2>
                 <div class="task-actions">
+                    <!-- More button -->
+                    <button class="btn more" onclick="this.parentNode.classList.toggle('show-more')">More</button>
                     <!-- Edit button -->
                     {% if not task.is_done %}
                         <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn edit">Edit</a>
