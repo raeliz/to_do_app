@@ -1,6 +1,7 @@
 // // @ts-check
 import { test, expect } from '@playwright/test'
 import { url, loginQueryPath, username, password } from '../../environment'
+import { loginForm } from '../../utils/login';
 
 // navigating to the site and verifying the url is correct and expected
 test.beforeEach(async ({ page }) => {
