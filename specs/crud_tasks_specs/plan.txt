@@ -1,4 +1,12 @@
 
 this is where i will place my test plan for the crud task process
 
+I will login and select "New Task" and create a new task
 
+I will input a title and description and create a new task
+
+I will then choose to Edit task and update the title and description
+
+I will then mark the task as done and verify the task is marked correctly
+
+I will then delete selected task and verify that it no longer exists on the page

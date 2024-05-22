@@ -13,10 +13,7 @@ test('my test', async ({ page }) => {
 
 // logout
 test('logout', async ({ page }) => {
-    await page.locator('input#test-username').fill(username)
-    await page.locator('input#test-password').fill(password)
-
-    await page.locator('button#test-login-button').click()
+    await loginForm(page, username, password)
     
     await page.getByRole('link', { name: "Logout" }).click()
     
