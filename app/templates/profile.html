@@ -1,0 +1,36 @@
+{% from 'macros.html' import header %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Profile</title>
+</head>
+<body>
+    {{ header('profile', username, preferred_name) }}
+    <form action="{{ url_for('profile') }}" method="POST">
+        <label for="preferred_name">Preferred Name: </label>
+        <input type="text" id="preferred_name" name="preferred_name" value="{{ username }}">
+
+        <label for="current_password">Current Password: </label>
+        <input type="password" id="current_password" name="current_password" placeholder="Current password">
+
+        <label for="new_password">New Password: </label>
+        <input type="password" id="new_password" name="new_password" placeholder="New password">
+
+        <label for="confirm_password">Confirm New Password: </label>
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password">
+
+        <button type="submit">Update</button>
+
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+    </form>
+
+    <form action="{{ url_for('delete_account') }}" method="POST" onsubmit="return confirm('Do you really want to delete your account?');">
+        <button type="submit" style="background-color: red;">Delete Account</button>
+    </form>
+</body>
+</html>

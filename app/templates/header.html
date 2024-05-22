@@ -1,0 +1,9 @@
+<div class="header">
+    <h1>Welcome, {{ preferred_name if preferred_name else username }}!</h1>
+    <div>
+        <a href="{{ url_for('index') }}" class="btn {% if current_page == 'index' %}disabled{% endif %}">My Tasks</a>
+        <a href="{{ url_for('new_task') }}" class="btn {% if current_page == 'new_task' %}disabled{% endif %}">New Task</a>
+        <a href="{{ url_for('profile') }}" class="btn {% if current_page == 'profile' %}disabled{% endif %}">Profile</a>
+        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+    </div>
+</div>

@@ -1,12 +1,17 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     display: flex;
     flex-direction: column;
+    background-color: #fbfbfb;
 }
 
 form {
     margin: auto;
     width: 50%;
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.1);
 }
 
 form input, form textarea {
@@ -14,6 +19,8 @@ form input, form textarea {
     width: 100%;
     margin-bottom: 15px;
     padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
 }
 
 form button {
@@ -22,6 +29,7 @@ form button {
     color: #fff;
     border: none;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 form button:hover {
@@ -33,24 +41,37 @@ a {
     margin: 10px;
     text-decoration: none;
     color: #007bff;
+    transition: color 0.2s;
 }
+
+a:hover {
+    color: #0056b3;
+}
+
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    padding: 20px;
+    box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .task-card {
+    border-radius: 8px;
     padding: 15px;
     margin: 15px 0;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.1);
 }
 
 .task-card.even {
     background-color: #f9f9f9;
+}
+
+.task-card.odd {
+    background-color: #e9e9e9;
 }
 
 .task-top-row {
@@ -60,32 +81,45 @@ a {
     flex-wrap: wrap;
 }
 
-.task-card.odd {
-    background-color: #e9e9e9;
-}
-
 .task-actions .btn {
     display: inline-block;
     padding: 5px 10px;
     margin-left: 10px;
     color: #fff;
     border-radius: 3px;
+    transition: background-color 0.2s;
 }
 
 .btn.edit {
-    background-color: blue;
+    background-color: #34495E;
+}
+
+.btn.edit:hover {
+    background-color: #2c3e50;
 }
 
 .btn.delete {
-    background-color: red;
+    background-color: #E74C3C;
+}
+
+.btn.delete:hover {
+    background-color: #c0392b;
 }
 
 .btn.done {
-    background-color: green;
+    background-color: #2ECC71;
+}
+
+.btn.done:hover {
+    background-color: #27ae60;
 }
 
 .btn.todo {
-    background-color: purple;
+    background-color: #9B59B6;
+}
+
+.btn.todo:hover {
+    background-color: #8e44ad;
 }
 
 .status {
@@ -93,13 +127,69 @@ a {
 }
 
 .status.todo {
-    color: purple;
+    color: #9B59B6;
 }
 
 .status.done {
-    color: green;
+    color: #2ECC71;
 }
 
 .inline-form {
     display: inline-block;
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: #ddd;
+}
+
+.task-actions .btn.more {
+    display: none;
+}
+
+/* Hide the toggle button and show the menu on large screens */
+@media (min-width: 600px) {
+    .toggle {
+        display: none;
+    }
+    .nav-menu {
+        display: block;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-menu {
+        display: none;
+    }
+
+    /* Show the menu when .show-menu class is added */
+    .nav-menu.show-menu {
+        display: flex;
+    }
+
+    .task-actions .btn.more {
+        display: inline-block;
+    }
+    /* Other styles, leave them as they are... */
+}
+
+/* On small screens, show the toggle button and initially hide the menu */
+.toggle {
+    cursor: pointer;
+    font-size: 2em;
+    margin-right: 10px;
+}
+
+/* .nav-menu displays vertically below the header by default and becomes hidden when .show-menu is added */
+.nav-menu {
+    display: flex;
+}
+
+.nav-menu .btn {
+    padding: 10px 20px;
+}
+
+.nav-menu.show-menu {
+    display: flex;
 }

@@ -13,7 +13,12 @@ def user_loader(user_id):
 @login_required
 def index():
     user_tasks = Task.query.filter_by(user_id=current_user.id).all()
-    return render_template('index.html', tasks=user_tasks)
+    return render_template(
+        'index.html',
+        tasks=user_tasks,
+        username=current_user.username,
+        preferred_name=current_user.preferred_name
+    )
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -143,4 +148,46 @@ def delete_task(task_id):
     db.session.commit()
     flash('Your task has been deleted!')
 
+    return redirect(url_for('index'))
+
+
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    error = None
+    if request.method == 'POST':
+        preferred_name = request.form.get('preferred_name')
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        if preferred_name:
+            current_user.preferred_name = preferred_name
+
+        if current_password or new_password or confirm_password:
+            if not current_user.password == current_password:
+                error = 'Invalid current password.'
+            elif not new_password == confirm_password:
+                error = 'New password and confirmed password do not match.'
+            else:
+                pass
+                # current_user.password = new_password
+
+        if error:
+            return render_template('profile.html', error=error)
+
+        db.session.commit()
+        flash('Your profile has been updated!')
+
+        return redirect(url_for('index'))
+
+    return render_template('profile.html', username=current_user.username)
+
+
+@app.route('/delete_account', methods=['POST'])
+@login_required
+def delete_account():
+    db.session.delete(current_user)
+    db.session.commit()
+    flash('Your account has been deleted!')
     return redirect(url_for('index'))
