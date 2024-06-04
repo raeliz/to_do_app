@@ -18,9 +18,11 @@ test('login', async ({ page }) => {
     
     await expect(page.url()).toBe(`${url}/`)
     await expect(page.getByText(`Welcome, ${username}!`)).toBeVisible()
-    await expect(page.getByText("You currently have no tasks")).toBeVisible()
+    await expect(page.getByRole('link', { name: "My Tasks" })).toBeVisible()
     await expect(page.getByRole('link', { name:  "New Task" })).toBeVisible()
+    await expect(page.getByRole('link', { name: "Profile" })).toBeVisible()
     await expect(page.getByRole('link', { name: "Logout" })).toBeVisible()
+    await expect(page.getByText("You currently have no tasks")).toBeVisible()
 });
 
 // logging in with invalid credentials

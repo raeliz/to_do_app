@@ -5,7 +5,8 @@ export const loginPath = `${url}/login`
 export const signupPath = `${url}/signup`
 export const newTaskPath = `${url}/new_task`
 
-export const username = `signUpUser${Date.now()}`
+export const signUpUser = `signUpUser${Date.now()}`
+export const username = `testuser3`
 export const password = `password`
 
 export const taskTitle = `Task Title: ${Date.now()}`
