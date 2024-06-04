@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Hi there! This is a starter project that I am using to practice and learn Playwright and testing automation as a whole.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/raeliz/to_do_app.git"
@@ -18,7 +16,8 @@
   },
   "homepage": "https://github.com/raeliz/to_do_app#readme",
   "devDependencies": {
-    "@playwright/test": "^1.44.0",
+    "@playwright/test": "^1.44.1",
+    "@types/node": "^20.14.1",
     "playwright": "^1.44.0"
   }
 }

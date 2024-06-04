@@ -28,7 +28,7 @@ test('edit task', async ({ page }) => {
     await expect(page.getByText(editedTaskDescription)).toBeVisible()
     await expect(page.getByText(taskDescription)).toBeHidden()
     
-    await expect(page.locator('p.status.todo')).toBeVisible()
+    await expect(page.getByText('Status: To Do')).toBeVisible()
     await expect(page.getByRole('link', { name: "Edit" })).toBeVisible()
     await expect(page.getByRole('link', { name: "Edit" })).toBeEnabled()
     await expect(page.getByRole('button', { name: "Delete" })).toBeVisible()
