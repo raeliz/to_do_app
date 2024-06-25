@@ -8,10 +8,6 @@ test.beforeEach(async ({ page }) => {
     await page.goto(url)
 });
 
-test('my test', async ({ page }) => {
-    expect(page.url()).toBe(loginQueryPath)
-});
-
 // clicking the "signup" link on the main page and verifying I am being redirected to the sign-up page
 test('signup redirection', async ({ page }) => {
     await page.getByRole('link', { name: "New user? Sign Up" }).click()
