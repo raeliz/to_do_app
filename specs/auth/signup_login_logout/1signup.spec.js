@@ -1,6 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test'
-import { url, loginQueryPath, signupPath, loginPath, signUpUser, password } from '../../environment'
+import { url, signupPath, loginPath, signUpUser, password } from '../../environment'
 import { signupForm } from '../../utils/signup';
 
 // navigating to the site and verifying the url is correct and expected

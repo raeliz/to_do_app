@@ -6,7 +6,7 @@ import { loginForm } from '../../utils/login';
 // navigating to the site and verifying the url is correct and expected
 test.beforeEach(async ({ page }) => {
     await page.goto(url)
-})
+});
 
 test('my test', async ({ page }) => {
     expect(page.url()).toBe(loginQueryPath)
@@ -23,7 +23,7 @@ test('create task', async ({ page }) => {
     await page.getByRole('link', { name: "New Task" }).click()
     await expect(page.url()).toBe(newTaskPath)
     
-    // bug report submitted
+    // bug report submitted 
     // await expect(page.getByText(`Welcome, ${username}!`)).toBeVisible()
     
     await page.locator('input[ name="title" ]').fill(taskTitle)

@@ -1,13 +1,34 @@
 
-this is where i will place my test plan for the auth process:
+Auth Test Plan: 
+OBJECTIVE: verify that auth works as expected
+
+(before each, navigate to To-Do website)
+
+- Signup
+    Scenario: User sign up
+        When I navigate to 'TO-DO' website, I will click the "New User? Sign up" link
+        Then I fill in respected fields with my information (${signUpUser} and ${password}) AND click "Sign Up" link
+        Then I should be redirected to the Login screen
+        
+    Scenario: User cannot sign up twice
+        When I click the "New User? Sign up" link
+        And I fill in respected fields with my same information (${signUpUser} and ${password}) AND click "Sign Up" link
+        Then I should see the error message "Username already exists" and will be unable to continue to login page
+    
+    
+- Login
+    Scenario: User login with valid credentials
+        When I login using my valid credentials (${username} and ${password})
+        Then I should see the "TO-DO" homepage
+        
+    Scenario: User login with invalid credentials
+        When I login using invalid credentials (`notValid${username}` and `notValid${password}`) OR when I login using my valid username but invalid password
+        Then I should see the error message "Please check your login details and try again"
 
 
-I will navigate to the site and inspect all visible elements
-
-I will sign up as a new user navigating here for the first time
-
-I will input a username and password in the corresponding text boxes and then select "sign up"
-
-I will log in using credentials just created
-
-I will then log out
+- Logout
+    Scenario: User log out
+        When I login using my valid credentials (${username} and ${password})
+        And I should see the 'Logout' link on the page
+        And I click the 'Logout' link
+        Then I should see the message "Please log in to access this page"

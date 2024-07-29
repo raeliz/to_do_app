@@ -17,7 +17,7 @@ test('edit task', async ({ page }) => {
     // login
     await loginForm(page, username, password)
     await expect(page.url()).toBe(`${url}/`)
-   
+    
     const editButtons = await page.$$('a.btn.edit');
     for (const button of editButtons) {
         const href = await button.getAttribute('href');
