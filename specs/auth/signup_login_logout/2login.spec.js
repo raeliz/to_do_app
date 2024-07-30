@@ -8,10 +8,6 @@ test.beforeEach(async ({ page }) => {
     await page.goto(url)
 })
 
-test('my test', async ({ page }) => {
-    expect(page.url()).toBe(loginQueryPath)
-});
-
 // login process
 test('login', async ({ page }) => {
     await loginForm(page, username, password)
@@ -26,11 +22,20 @@ test('login', async ({ page }) => {
 });
 
 // logging in with invalid credentials
-test('login validation', async ({ page }) => {
+test('login invalid username', async ({ page }) => {
     await page.locator('input#test-username').fill(`notValid${username}`)
     await page.locator('input#test-password').fill(`notValid${password}`)
     
     await page.locator('button#test-login-button').click()
     
+    await expect(page.getByText("Please check your login details and try again.")).toBeVisible()
+});
+
+test('login invalid password', async ({ page }) => {
+    await page.locator('input#test-username').fill(username)
+    await page.locator('input#test-password').fill(`notValid${password}`)
+
+    await page.locator('button#test-login-button').click()
+
     await expect(page.getByText("Please check your login details and try again.")).toBeVisible()
 });

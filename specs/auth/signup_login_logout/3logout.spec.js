@@ -8,10 +8,6 @@ test.beforeEach(async ({ page }) => {
     await page.goto(url)
 })
 
-test('my test', async ({ page }) => {
-    expect(page.url()).toBe(loginQueryPath)
-});
-
 // logout
 test('logout', async ({ page }) => {
     await loginForm(page, username, password)

@@ -1,0 +1,24 @@
+
+Auth Test Plan: 
+OBJECTIVE: verify that crud for profile works as expected
+
+(before each, navigate to To-Do website)
+
+- Edit Profile
+    Scenario: User edits profile
+        When asdf
+        And asdf
+        Then asdf
+    
+- View Profile
+    Scenario: User views profile
+        When asdf
+        And asdf
+        Then asdf
+
+
+- Delete Account
+    Scenario: User deletes account
+        When asdf
+        And asdf
+        Then asdf

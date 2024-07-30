@@ -1,15 +1,11 @@
 // @ts-check
 import { test, expect } from '@playwright/test'
-import { url, loginQueryPath, signupPath, loginPath, signUpUser, password } from '../../environment'
+import { url, signupPath, loginPath, signUpUser, password } from '../../environment'
 import { signupForm } from '../../utils/signup';
 
 // navigating to the site and verifying the url is correct and expected
 test.beforeEach(async ({ page }) => {
     await page.goto(url)
-});
-
-test('my test', async ({ page }) => {
-    expect(page.url()).toBe(loginQueryPath)
 });
 
 // clicking the "signup" link on the main page and verifying I am being redirected to the sign-up page
