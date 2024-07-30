@@ -1,0 +1,18 @@
+|˶˙ᵕ˙ )ﾉﾞ Hello World!
+
+
+Today I will be going through the auth process and will be showing you the following:
+1. Signup Redirection
+2. Login Redirection
+3. Signup
+4. Cannot sign up twice using the same credentials
+5. Login
+6. Cannot login using incorrect credentials
+7. Logout
+
+
+Goodbye for now! * ☽ *˚
+° ˛ ° ˚* _Π_____˛
+✩ ˚˛˚*/______/__＼。✩˚ ˚˛
+˚ ˛˚˛˚｜ 田田｜門｜ ˚ ˚
+´´ ̛ ̛ ´´ ´´ ´´ ̛ ̛ ´´ ´´ ´´
