@@ -6,7 +6,7 @@ OBJECTIVE: verify that crud for tasks works as expected
 
 - Create Task
     Scenario: User create task
-        When I login using my credentials
+        When I login using my valid credentials (${username} and ${password})
         And I click "New Task" link
         And I fill in "Title" input field with new task title
         And I fill in "Description" input field with new task description
