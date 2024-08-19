@@ -4,21 +4,27 @@ OBJECTIVE: verify that crud for profile works as expected
 
 (before each, navigate to To-Do website)
 
-- Edit Profile
-    Scenario: User edits profile
-        When asdf
-        And asdf
-        Then asdf
-    
 - View Profile
     Scenario: User views profile
-        When asdf
-        And asdf
-        Then asdf
+        When I login using my valid credentials (${username} and ${password})
+        And I click the "Profile" link
+        Then I should see the "Profile" link enabled AND "Welcome ${username}!" to be visible AND the "Preferred name" textbox to be visible AND "Current Password" textbox to be visible AND "New Password" textbox to be visible AND "Confirm New password" textbox to be visible AND "Update" button to be visible and enabled "Delete Account" button to be visible and enabled
+
+
+- Edit Profile
+    Scenario: User edits profile
+        When I navigate to the "Profile" page
+        And I fill in "Preferred Name" textbox with my ${preferredName}
+        And I fill in "Current Password" textbox with my current password
+        And I fill in "New Password" textbox with my ${newPassword}
+        And I fill in "Confirm New Password" textbox with my ${newPassword}
+        And I click on "Update" button
+        Then I should be redirected to ${url/} and see "Welcome, ${preferredName}!" at the top of "My Tasks" page AND "Welcome, ${preferredName}!" at the top of "New Task" page AND "Welcome, ${preferredName}!" at the top of "Profile" page AND I should NOT be able to login using ${password}
 
 
 - Delete Account
     Scenario: User deletes account
-        When asdf
-        And asdf
-        Then asdf
+        When I navigate to the "Profile" page
+        And I click on "Delete Account" button
+        And I view the pop-up message that says "Do you really want to delete your account?" AND I click on "OK"
+        Then I should be logged out AND I should see the message "Your account has been deleted!" and "Please log in to access this page." AND I should not be able to log in using my credentials
