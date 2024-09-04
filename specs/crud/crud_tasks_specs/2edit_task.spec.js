@@ -1,4 +1,5 @@
 // @ts-check
+require('./tasks_setup');
 import { test, expect } from '@playwright/test'
 import { url, loginQueryPath, username, password, taskTitle, taskDescription, editedTaskTitle, editedTaskDescription } from '../../environment'
 import { loginForm } from '../../utils/login';

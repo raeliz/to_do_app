@@ -6,14 +6,17 @@ export const signupPath = `${url}/signup`
 export const newTaskPath = `${url}/new_task`
 export const profilePath = `${url}/profile`
 
-export const signUpUser = `signUpUser${Date.now()}`
+export const signUpUser = `signUpUser`
+export const loginUser = `loginUser`
+export const taskUser = `taskUser`
+export const profileUser = `profileUser`
 export const username = `testuser3`
 export const password = `password`
 
-export const taskTitle = `Task Title: ${Date.now()}`
+export const taskTitle = `Create Task Title :)`
 export const taskDescription = `New task description`
-export const editedTaskTitle = `Edited Task Title :)`
-export const editedTaskDescription = `Edited task description`
+export const editedTaskTitle = `Edit Task Title :)`
+export const editedTaskDescription = `Edit task description`
 
-export const preferredName =  `preferred testuser3`
+export const preferredName =  `raeliz`
 export const newPassword = `NEWpassword`

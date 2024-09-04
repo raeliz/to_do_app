@@ -1,18 +1,22 @@
-// // @ts-check
+// @ts-check
+require('./auth_setup');
+
 import { test, expect } from '@playwright/test'
-import { url, loginQueryPath, username, password } from '../../environment'
+import { url, username, password, loginUser } from '../../environment'
 import { loginForm } from '../../utils/login';
 
 // navigating to the site and verifying the url is correct and expected
 test.beforeEach(async ({ page }) => {
     await page.goto(url)
-})
+});
+
 
 // login process
 test('login', async ({ page }) => {
-    await loginForm(page, username, password)
+    // await signupForm(page, loginUser, password)
+    await loginForm(page, loginUser, password)
     
-    await expect(page.url()).toBe(`${url}/`)
+    expect(page.url()).toBe(`${url}/`)
     await expect(page.getByText(`Welcome, ${username}!`)).toBeVisible()
     await expect(page.getByRole('link', { name: "My Tasks" })).toBeVisible()
     await expect(page.getByRole('link', { name:  "New Task" })).toBeVisible()

@@ -26,4 +26,5 @@ test('delete account', async ({ page }) => {
     })
     
     expect(page.url()).toBe(`${profilePath}`)
+    await expect(page.getByText("Your account has been deleted!")).toBeVisible()
 });
