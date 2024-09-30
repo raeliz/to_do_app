@@ -32,8 +32,9 @@ module.exports = defineConfig({
 
     // use: {
     //     launchOptions: {
-    //         slowMo: 3000,
+    //         slowMo: 500,
     //     },
+    // //     browserName: 'chromium'
     // },
 
     /* Configure projects for major browsers */
@@ -76,7 +77,7 @@ module.exports = defineConfig({
 
     // /* Run your local dev server before starting the tests */
     // webServer: {
-    //     command: 'npm run start',
+    //     command: 'python3 ./run.py  ',
     //     url: 'http://127.0.0.1:9090',
     //     reuseExistingServer: !process.env.CI,
     // },

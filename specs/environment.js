@@ -1,3 +1,5 @@
+// @ts-check
+
 export const url = 'http://127.0.0.1:9090'
 
 export const loginQueryPath = `${url}/login?next=%2F`
@@ -6,14 +8,22 @@ export const signupPath = `${url}/signup`
 export const newTaskPath = `${url}/new_task`
 export const profilePath = `${url}/profile`
 
-export const signUpUser = `signUpUser${Date.now()}`
-export const username = `testuser3`
+export const signupUser = `signupUser`
+export const loginUser = `loginUser`
+export const logoutUser = `logoutUser`
+export const createTaskUser = `createTaskUser`
+export const editTaskUser = `editTaskUser`
+export const markAsDoneUser = `markAsDoneUser`
+export const deleteTaskUser = `deleteTaskUser`
+export const viewProfileUser = `viewProfileUser`
+export const editProfileUser = `editProfileUser`
+export const deleteProfileUser = 'deleteProfileUser'
 export const password = `password`
 
-export const taskTitle = `Task Title: ${Date.now()}`
+export const taskTitle = `Create Task Title :)`
 export const taskDescription = `New task description`
-export const editedTaskTitle = `Edited Task Title :)`
-export const editedTaskDescription = `Edited task description`
+export const editedTaskTitle = `Edit Task Title :)`
+export const editedTaskDescription = `Edit task description`
 
-export const preferredName =  `preferred testuser3`
+export const preferredName =  `raeliz`
 export const newPassword = `NEWpassword`
