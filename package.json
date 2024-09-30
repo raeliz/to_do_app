@@ -16,8 +16,13 @@
   },
   "homepage": "https://github.com/raeliz/to_do_app#readme",
   "devDependencies": {
-    "@playwright/test": "^1.46.0",
+    "@playwright/test": "^1.47.1",
     "@types/node": "^20.14.1",
     "playwright": "^1.46.0"
+  },
+  "dependencies": {
+    "fsevents": "^2.3.2",
+    "playwright-core": "^1.47.0",
+    "undici-types": "^5.26.5"
   }
 }

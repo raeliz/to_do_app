@@ -7,12 +7,12 @@ OBJECTIVE: verify that auth works as expected
 - Signup
     Scenario: User sign up
         When I navigate to 'TO-DO' website, I will click the "New User? Sign up" link
-        Then I fill in respected fields with my information (${signUpUser} and ${password}) AND click "Sign Up" link
+        Then I fill in respected fields with my information (${signupUser} and ${password}) AND click "Sign Up" link
         Then I should be redirected to the Login screen
         
     Scenario: User cannot sign up twice
         When I click the "New User? Sign up" link
-        And I fill in respected fields with my same information (${signUpUser} and ${password}) AND click "Sign Up" link
+        And I fill in respected fields with my same information (${signupUser} and ${password}) AND click "Sign Up" link
         Then I should see the error message "Username already exists" and will be unable to continue to login page
     
     
