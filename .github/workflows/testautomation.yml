@@ -1,0 +1,10 @@
+# this is my workflow file :)
+
+name: Test Automation Suite
+on: [push]
+jobs: 
+    Run-Automation-Tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              run: echo "hello :D"
