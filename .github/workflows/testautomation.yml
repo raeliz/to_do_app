@@ -7,7 +7,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout 👀
-              run: actions/checkout@v4
+              uses: actions/checkout@v4
             - name: Install Dependencies for Web App 🖥️
               run: |
                     python3 -m venv venv
