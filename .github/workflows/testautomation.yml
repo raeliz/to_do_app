@@ -17,6 +17,8 @@ jobs:
                     pip install -r requirements.txt 
                     python ./run.py &
             - name: Install Dependencies for Automation Tests 🦛
-              run: npm install
+              run: |
+                    rm -rf node_modules package-lock.json
+                    npm install
             - name: Run Automation Suites 🏁
               run: npx playwright test
