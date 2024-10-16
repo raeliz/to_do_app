@@ -21,8 +21,10 @@
     "playwright": "^1.46.0"
   },
   "dependencies": {
-    "fsevents": "^2.3.2",
     "playwright-core": "^1.47.0",
     "undici-types": "^5.26.5"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }
