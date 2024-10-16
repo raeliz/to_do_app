@@ -15,12 +15,10 @@ jobs:
                     python3 -m venv venv
                     source venv/bin/activate
                     pip install -r requirements.txt 
-                    source venv/bin/activate 
                     python ./run.py &
             - name: Install Dependencies for Automation Tests 🦛
               run: |
-                    npm init -y
-                    npm i -D playwright
-                    npm install --save-dev playwright
+                    # npm i -D playwright
+                    npm install
             - name: Run Automation Suites 🏁
               run: npx playwright test
