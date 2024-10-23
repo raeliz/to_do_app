@@ -289,3 +289,45 @@ a.disabled {
 .btn.confirm-delete:hover {
     background-color: #c0392b;
 }
+
+.attachments-list {
+    list-style-type: none;  /* Removes bullet points */
+    padding: 0;  /* Removes default padding */
+    display: flex;  /* Optional: display thumbnails in a row */
+    gap: 10px;  /* Optional: space between thumbnails */
+}
+
+.attachments-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Centers the attachments within the container */
+    margin-top: 20px; /* Adds some space above the attachments */
+}
+
+.attachment-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.thumbnail {
+    width: 128px;
+    height: 128px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.attachment-item form button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.attachment-item form button:hover {
+    background-color: #d32f2f;
+}

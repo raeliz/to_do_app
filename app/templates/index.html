@@ -14,7 +14,7 @@
     {% for task in tasks %}
         <div class="task-card {% if loop.index % 2 == 0 %}even{% else %}odd{% endif %}">
             <div class="task-top-row">
-                <h2>{{ task.title }}</h2>
+                <p class="status {{ 'done' if task.is_done else 'todo' }}">Status: {{ 'Done' if task.is_done else 'To Do' }}</p>
                 <div class="task-actions">
                     <!-- More button -->
                     <button class="btn more" onclick="this.parentNode.classList.toggle('show-more')">More</button>
@@ -32,8 +32,22 @@
                     {% endif %}
                 </div>
             </div>
+            <h2>{{ task.title }}</h2>
             <p>{{ task.description }}</p>
-            <p class="status {{ 'done' if task.is_done else 'todo' }}">Status: {{ 'Done' if task.is_done else 'To Do' }}</p>
+
+            <!-- Attachments -->
+            {% if task.attachments %}
+            <h3>Attachments</h3>
+                <ul class="attachments-list">
+                    {% for attachment in task.attachments %}
+                        <li>
+                            <a href="{{ url_for('download_attachment', attachment_id=attachment.id) }}">
+                                <img src="{{ url_for('static', filename='uploads/' ~ attachment.filename) }}" alt="{{ attachment.filename }}" class="thumbnail">
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     {% endfor %}
 
@@ -75,7 +89,7 @@
     function submitDeleteForm() {
         document.getElementById('deleteForm').submit();
     }
-    
+
     function hideModal() {
         document.getElementById('deleteModal').style.display = 'none';
     }

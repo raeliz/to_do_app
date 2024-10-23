@@ -1,13 +1,13 @@
 import os
 from importlib.metadata import files
 
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, send_from_directory
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from app import db, app, login_manager
-from .models import User, Task
-from .utils import handle_upload
+from .models import User, Task, Attachment
+from .utils import handle_upload, upload_file
 
 
 @login_manager.user_loader
@@ -79,7 +79,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))  
+    return redirect(url_for('index'))
 
 @app.route('/new_task', methods=['GET', 'POST'])
 @login_required
@@ -92,13 +92,20 @@ def new_task():
             flash('Task title is required!')
         else:
             new_task = Task(title=title, description=description, user_id=current_user.id)
-            
             db.session.add(new_task)
+
+            # Handle file uploads
+            for file in request.files.getlist('attachments'):
+                if file.filename and file.filename != "":
+                    upload_success, filename = upload_file(file)
+                    attachment = Attachment(filename=filename, task_id=new_task.id)
+                    db.session.add(attachment)
+
             db.session.commit()
             flash('Your task has been created!')
 
         return redirect(url_for('index'))
-    
+
     return render_template(
         template_name_or_list='new_task.html',
         username=current_user.username,
@@ -146,6 +153,13 @@ def edit_task(task_id):
             task.title = title
             task.description = description
 
+            # Handle file uploads
+            for file in request.files.getlist('attachments'):
+                if file.filename and file.filename != "":
+                    upload_success, filename = upload_file(file)
+                    attachment = Attachment(filename=filename, task_id=task.id)
+                    db.session.add(attachment)
+
             db.session.commit()
             flash('Your task has been updated!')
 
@@ -171,6 +185,33 @@ def delete_task(task_id):
 
     return redirect(url_for('index'))
 
+@app.route('/attachment/<int:attachment_id>/download', methods=['GET'])
+@login_required
+def download_attachment(attachment_id):
+    attachment = Attachment.query.get(attachment_id)
+    if not attachment or attachment.task.user_id != current_user.id:
+        return '404'
+
+    return send_from_directory('static/uploads/', attachment.filename, as_attachment=True)
+
+
+@app.route('/attachment/<int:attachment_id>/delete', methods=['POST'])
+@login_required
+def delete_attachment(attachment_id):
+    attachment = Attachment.query.get(attachment_id)
+    if not attachment or attachment.task.user_id != current_user.id:
+        return '404'
+
+    # delete file from filesystem
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], attachment.filename)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+    db.session.delete(attachment)
+    db.session.commit()
+
+    flash('Attachment deleted successfully!')
+    return redirect(request.referrer)
 
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
@@ -195,7 +236,7 @@ def profile():
 
         # Handle profile picture upload
         if 'profile_picture' in request.files:
-            if request.files['profile_picture'].content_length > 0:
+            if request.files['profile_picture'].filename and request.files['profile_picture'].filename != "" :
                 upload_success, filename = handle_upload(request, 'profile_picture')
                 if upload_success:
                     current_user.profile_picture = filename
