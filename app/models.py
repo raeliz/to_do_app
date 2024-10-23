@@ -7,6 +7,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     preferred_name = db.Column(db.String(100))
+    profile_picture = db.Column(db.String(100), nullable=True)
     tasks = db.relationship('Task')
 
 

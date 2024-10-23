@@ -8,7 +8,7 @@
     <title>Title</title>
 </head>
 <body>
-{{ header('index', username, preferred_name) }}
+{{ header('index', username, preferred_name, profile_picture) }}
 
 {% if tasks %}
     {% for task in tasks %}
@@ -23,9 +23,7 @@
                         <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn edit">Edit</a>
                     {% endif %}
                     <!-- Delete button -->
-                    <form action="{{ url_for('delete_task', task_id=task.id) }}" method="POST" class="inline-form">
-                        <button type="submit" class="btn delete">Delete</button>
-                    </form>
+                    <button type="button" class="btn delete" onclick="confirmDelete('{{ url_for('delete_task', task_id=task.id) }}')">Delete</button>
                     <!-- Mark as done/to do button -->
                     {% if not task.is_done %}
                         <a href="{{ url_for('done_task', task_id=task.id) }}" class="btn done">Mark as Done</a>
@@ -38,8 +36,50 @@
             <p class="status {{ 'done' if task.is_done else 'todo' }}">Status: {{ 'Done' if task.is_done else 'To Do' }}</p>
         </div>
     {% endfor %}
+
+    <!-- Pagination controls-->
+    <div class="pagination">
+        {% if pagination.has_prev %}
+            <a href="{{ url_for('index', page=pagination.prev_num) }}" class="btn">Previous</a>
+        {% endif %}
+        <span>Page {{ pagination.page }} of {{ pagination.pages }}</span>
+        {% if pagination.has_next %}
+            <a href="{{ url_for('index', page=pagination.next_num) }}" class="btn">Next</a>
+        {% endif %}
+    </div>
 {% else %}
     <p>You currently have no tasks</p>
 {% endif %}
+
+<!-- Modal -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="hideModal()">&times;</span>
+        <p>This action is permanent and cannot be undone. Are you sure?</p>
+        <div class="modal-actions">
+            <button type="button" class="btn cancel" onclick="hideModal()">Cancel</button>
+            <button type="submit" class="btn confirm-delete" onclick="submitDeleteForm()">Delete Now</button>
+
+            <form id="deleteForm" action="" method="POST" class="inline-form">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(deleteUrl) {
+        document.getElementById('deleteForm').action = deleteUrl;
+        document.getElementById('deleteModal').style.display = 'block';
+    }
+
+    function submitDeleteForm() {
+        document.getElementById('deleteForm').submit();
+    }
+    
+    function hideModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>

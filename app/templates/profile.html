@@ -8,10 +8,11 @@
     <title>Profile</title>
 </head>
 <body>
-    {{ header('profile', username, preferred_name) }}
-    <form action="{{ url_for('profile') }}" method="POST">
+    {{ header('profile', username, preferred_name, profile_picture) }}
+    <form action="{{ url_for('profile') }}" method="POST" enctype="multipart/form-data">
+        <!-- Existing fields -->
         <label for="preferred_name">Preferred Name: </label>
-        <input type="text" id="preferred_name" name="preferred_name" value="{{ username }}">
+        <input type="text" id="preferred_name" name="preferred_name" value="{{ preferred_name if preferred_name else username }}">
 
         <label for="current_password">Current Password: </label>
         <input type="password" id="current_password" name="current_password" placeholder="Current password">
@@ -21,6 +22,10 @@
 
         <label for="confirm_password">Confirm New Password: </label>
         <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password">
+
+        <!-- New field for profile picture -->
+        <label for="profile_picture">Profile Picture: </label>
+        <input type="file" id="profile_picture" name="profile_picture">
 
         <button type="submit">Update</button>
 

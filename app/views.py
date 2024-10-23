@@ -1,8 +1,14 @@
+import os
+from importlib.metadata import files
+
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from app import db, app, login_manager
 from .models import User, Task
+from .utils import handle_upload
+
 
 @login_manager.user_loader
 def user_loader(user_id):
@@ -12,13 +18,20 @@ def user_loader(user_id):
 @app.route('/')
 @login_required
 def index():
-    user_tasks = Task.query.filter_by(user_id=current_user.id).all()
+    page = request.args.get('page', 1, type=int)  # Get the ?page= value from the query string
+    per_page = 5  # Items per page
+    pagination = Task.query.filter_by(user_id=current_user.id).paginate(page = page, per_page = per_page, error_out=False)
+    tasks = pagination.items
+
     return render_template(
         'index.html',
-        tasks=user_tasks,
+        tasks=tasks,
+        pagination=pagination,
         username=current_user.username,
-        preferred_name=current_user.preferred_name
+        preferred_name=current_user.preferred_name,
+        profile_picture=current_user.profile_picture
     )
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -86,7 +99,12 @@ def new_task():
 
         return redirect(url_for('index'))
     
-    return render_template('new_task.html')
+    return render_template(
+        template_name_or_list='new_task.html',
+        username=current_user.username,
+        preferred_name=current_user.preferred_name,
+        profile_picture=current_user.profile_picture
+    )
 
 @app.route('/task/<int:task_id>/done')
 @login_required
@@ -133,7 +151,10 @@ def edit_task(task_id):
 
         return redirect(url_for('index'))
 
-    return render_template('edit_task.html', task=task)
+    return render_template(
+        template_name_or_list='edit_task.html',
+        task=task,
+    )
 
 
 # Once the DELETE request is received from the client, the server removes the task from the database.
@@ -170,18 +191,37 @@ def profile():
             elif not new_password == confirm_password:
                 error = 'New password and confirmed password do not match.'
             else:
-                pass
-                # current_user.password = new_password
+                current_user.password = new_password
+
+        # Handle profile picture upload
+        if 'profile_picture' in request.files:
+            if request.files['profile_picture'].content_length > 0:
+                upload_success, filename = handle_upload(request, 'profile_picture')
+                if upload_success:
+                    current_user.profile_picture = filename
+                else:
+                    error = 'Unable to upload file. Only PNG, JPG, JPEG, and GIF files are supported.'
 
         if error:
-            return render_template('profile.html', error=error)
+            return render_template(
+                template_name_or_list='profile.html',
+                error=error,
+                username=current_user.username,
+                preferred_name=current_user.preferred_name,
+                profile_picture=current_user.profile_picture
+            )
 
         db.session.commit()
         flash('Your profile has been updated!')
 
         return redirect(url_for('index'))
 
-    return render_template('profile.html', username=current_user.username)
+    return render_template(
+        template_name_or_list='profile.html',
+        username=current_user.username,
+        preferred_name=current_user.preferred_name,
+        profile_picture=current_user.profile_picture
+    )
 
 
 @app.route('/delete_account', methods=['POST'])
