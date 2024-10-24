@@ -20,10 +20,10 @@ export const editProfileUser = `editProfileUser`
 export const deleteProfileUser = 'deleteProfileUser'
 export const password = `password`
 
-export const taskTitle = `Create Task Title :)`
-export const taskDescription = `New task description`
+export const taskTitle = `This is a Task Title :)`
+export const taskDescription = `this is a task description`
 export const editedTaskTitle = `Edit Task Title :)`
-export const editedTaskDescription = `Edit task description`
+export const editedTaskDescription = `edit task description`
 
 export const preferredName =  `raeliz`
 export const newPassword = `NEWpassword`

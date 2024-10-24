@@ -32,7 +32,7 @@ module.exports = defineConfig({
 
     // use: {
     //     launchOptions: {
-    //         slowMo: 500,
+    //         slowMo: 750,
     //     },
     // //     browserName: 'chromium'
     // },
