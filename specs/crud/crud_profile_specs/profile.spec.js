@@ -5,7 +5,6 @@ import { deleteProfileTests } from './3delete_profile';
 import { editProfileTests } from './2edit_profile';
 import { signupForm } from '../../utils/signup';
 import { viewProfileTests} from './1view_profile';
-import { deleteProfileUser } from '../../environment';
 
 test.describe("Profile Tests", () => {
     const accounts = {
@@ -34,6 +33,7 @@ test.describe("Profile Tests", () => {
         const page = await context.newPage();
         
         delete accounts['deleteProfileUser'];
+        accounts['editProfileUser'] = 'NEWpassword';
 
         for (const [username, password] of Object.entries(accounts)) {
             await deleteForm(page, username, password);

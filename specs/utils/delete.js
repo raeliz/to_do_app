@@ -14,6 +14,6 @@ export async function deleteForm(page, username, password) {
     await page.locator('input#test-password').fill(password)
     await page.locator('button#test-login-button').click()
     
-    await page.getByRole('link', { name: "Profile" }).click()
+    await page.getByRole('link', { name: "Profile", exact: true }).click()
     await page.getByRole('button', { name: "Delete Account" }).click()
 };

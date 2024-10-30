@@ -27,6 +27,7 @@ export const viewProfileTests = () => {
         await expect(page.getByRole('textbox', { name: "Current Password:" })).toBeVisible();
         await expect(page.getByPlaceholder('New password', { exact: true })).toBeVisible();
         await expect(page.getByPlaceholder('Confirm new password', { exact: true })).toBeVisible();
+        // await expect(page.getByRole('input', { name: "Profile Picture:: No file chosen" })).toBeVisible();
         await expect(page.getByRole('button', { name: "Update" })).toBeVisible();
         await expect(page.getByRole('button', { name: "Delete Account" })).toBeVisible();
     });
