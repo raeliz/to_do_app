@@ -22,13 +22,13 @@ export const deleteProfileTests = () => {
         // login
         await loginForm(page, deleteProfileUser, password);
 
-        await page.getByRole('link', { name: "Profile" }).click();
+        await page.getByRole('link', { name: "Profile", exact: true }).click();
         await page.getByRole('button', { name: "Delete Account" }).click();
         
         await expect(page.getByText("Your account has been deleted!")).toBeVisible();
     });
 
-    // try to login with old credentials
+    // try to login with deleted credentials
     test('login with deleted credentials', async ({ page }) => {
         // login
         await loginForm(page, deleteProfileUser, password);

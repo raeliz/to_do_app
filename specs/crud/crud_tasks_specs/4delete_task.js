@@ -27,6 +27,7 @@ export const deleteTaskTests = () => {
         await createTask(page, taskTitle, taskDescription);
         
         await page.getByRole('button', { name: "Delete" }).click();
+        await page.getByRole('button', { name: "Delete Now" }).click();
         
         await expect(page.getByText(taskTitle)).toBeHidden();
         await expect(page.getByText(editedTaskTitle)).toBeHidden();

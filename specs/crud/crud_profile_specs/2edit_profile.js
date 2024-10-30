@@ -27,40 +27,38 @@ export const editProfileTests = () => {
         await page.getByRole('textbox', { name: "Current Password:" }).fill(password);
         await page.getByPlaceholder('New password', { exact: true }).fill(newPassword);
         await page.getByPlaceholder('Confirm new password', { exact: true }).fill(newPassword);
+        // await page.getByLabel('Profile Picture:').click();
+        // await page.locator('input[name="file-upload-button]').click();
+        // await page.getByLabel('Profile Picture:').setInputFiles('./specs/images/pfp_raeliz.jpeg');
         
         await page.getByRole('button', { name: "Update" }).click();
         
+        // verifying new name and new image is visible across site
         await expect(page.getByText(`Welcome, ${preferredName}!`)).toBeVisible();
+        // await expect(page.getByRole('image', { name: 'Profile Picture' })).toBeVisible();
+        
+        await page.getByRole('link', { name: "New Task" }).click();
+        await expect(page.getByText(`Welcome, ${preferredName}!`)).toBeVisible();
+        // await expect(page.getByRole('image', { name: 'Profile Picture' })).toBeVisible();
+        
+        await page.getByRole('link', { name: "Profile", exact: true }).click();
+        await expect(page.getByText(`Welcome, ${preferredName}!`)).toBeVisible();
+        // await expect(page.getByRole('image', { name: 'Profile Picture' })).toBeVisible();
     });
 
-    // // bug report submitted
-    // // new name on new task page
-    // test('new name new task page', async ({ page }) => {
-    //     // login
-    //     await loginForm(page, username, password);;
+    // login using new password
+    test('login using new password', async ({ page }) => {
+        // login
+        await loginForm(page, editProfileUser, newPassword);
         
-    //     await page.getByRole('link', { name: "New Task" }).click();;
-        
-    //     await expect(page.getByText(`Welcome, ${preferredName}!`)).toBeVisible();;
-    // });
+        expect(page.url()).toBe(`${url}/`);
+    });
+    
+    // login with old password
+    test('login using old password', async ({ page }) => {
+        // login
+        await loginForm(page, editProfileUser, password);
 
-    // // bug report submitted
-    // // new name on profile page
-    // test('new name profile page', async ({ page }) => {
-    //     // login
-    //     await loginForm(page, username, password);;
-        
-    //     await page.getByRole('link', { name: "Profile" }).click();;
-        
-    //     await expect(page.getByText(`Welcome, ${preferredName}!`)).toBeVisible();;
-    // });
-
-    // // bug report submitted
-    // // login using new password
-    // test('login using new password', async ({ page }) => {
-    //     // login
-    //     await loginForm(page, username, newPassword);
-        
-    //     // await expect(page.url()).toBe(`${url}/`);
-    // });
+        await expect(page.getByText("Please check your login details and try again.")).toBeVisible();
+    });
 };
