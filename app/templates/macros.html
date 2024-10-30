@@ -1,6 +1,11 @@
-{% macro header(current_page, username, preferred_name) %}
+{% macro header(current_page, username, preferred_name, profile_picture) %}
     <div class="header">
-        <h1>Welcome, {{ preferred_name if preferred_name else username }}!</h1>
+        <div class="profile-container">
+            {% if profile_picture %}
+                <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='uploads/' ~ profile_picture) }}" alt="Profile Picture" class="profile-picture"></a>
+            {% endif %}
+            <h1>Welcome, {{ preferred_name if preferred_name else username }}!</h1>
+        </div>
         <button class="toggle">&#9776;</button>
         <div class="nav-menu">
             <a href="{{ url_for('index') }}" class="btn {% if current_page == 'index' %}disabled{% endif %}">My Tasks</a>

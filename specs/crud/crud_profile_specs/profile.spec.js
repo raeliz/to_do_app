@@ -33,6 +33,7 @@ test.describe("Profile Tests", () => {
         const page = await context.newPage();
         
         delete accounts['deleteProfileUser'];
+        accounts['editProfileUser'] = 'NEWpassword';
 
         for (const [username, password] of Object.entries(accounts)) {
             await deleteForm(page, username, password);

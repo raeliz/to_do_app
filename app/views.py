@@ -1,8 +1,14 @@
-from flask import render_template, redirect, url_for, flash, request
+import os
+from importlib.metadata import files
+
+from flask import render_template, redirect, url_for, flash, request, send_from_directory
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from app import db, app, login_manager
-from .models import User, Task
+from .models import User, Task, Attachment
+from .utils import handle_upload, upload_file
+
 
 @login_manager.user_loader
 def user_loader(user_id):
@@ -12,13 +18,20 @@ def user_loader(user_id):
 @app.route('/')
 @login_required
 def index():
-    user_tasks = Task.query.filter_by(user_id=current_user.id).all()
+    page = request.args.get('page', 1, type=int)  # Get the ?page= value from the query string
+    per_page = 5  # Items per page
+    pagination = Task.query.filter_by(user_id=current_user.id).paginate(page = page, per_page = per_page, error_out=False)
+    tasks = pagination.items
+
     return render_template(
         'index.html',
-        tasks=user_tasks,
+        tasks=tasks,
+        pagination=pagination,
         username=current_user.username,
-        preferred_name=current_user.preferred_name
+        preferred_name=current_user.preferred_name,
+        profile_picture=current_user.profile_picture
     )
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -66,7 +79,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))  
+    return redirect(url_for('index'))
 
 @app.route('/new_task', methods=['GET', 'POST'])
 @login_required
@@ -79,14 +92,26 @@ def new_task():
             flash('Task title is required!')
         else:
             new_task = Task(title=title, description=description, user_id=current_user.id)
-            
             db.session.add(new_task)
+
+            # Handle file uploads
+            for file in request.files.getlist('attachments'):
+                if file.filename and file.filename != "":
+                    upload_success, filename = upload_file(file)
+                    attachment = Attachment(filename=filename, task_id=new_task.id)
+                    db.session.add(attachment)
+
             db.session.commit()
             flash('Your task has been created!')
 
         return redirect(url_for('index'))
-    
-    return render_template('new_task.html')
+
+    return render_template(
+        template_name_or_list='new_task.html',
+        username=current_user.username,
+        preferred_name=current_user.preferred_name,
+        profile_picture=current_user.profile_picture
+    )
 
 @app.route('/task/<int:task_id>/done')
 @login_required
@@ -128,12 +153,22 @@ def edit_task(task_id):
             task.title = title
             task.description = description
 
+            # Handle file uploads
+            for file in request.files.getlist('attachments'):
+                if file.filename and file.filename != "":
+                    upload_success, filename = upload_file(file)
+                    attachment = Attachment(filename=filename, task_id=task.id)
+                    db.session.add(attachment)
+
             db.session.commit()
             flash('Your task has been updated!')
 
         return redirect(url_for('index'))
 
-    return render_template('edit_task.html', task=task)
+    return render_template(
+        template_name_or_list='edit_task.html',
+        task=task,
+    )
 
 
 # Once the DELETE request is received from the client, the server removes the task from the database.
@@ -150,6 +185,33 @@ def delete_task(task_id):
 
     return redirect(url_for('index'))
 
+@app.route('/attachment/<int:attachment_id>/download', methods=['GET'])
+@login_required
+def download_attachment(attachment_id):
+    attachment = Attachment.query.get(attachment_id)
+    if not attachment or attachment.task.user_id != current_user.id:
+        return '404'
+
+    return send_from_directory('static/uploads/', attachment.filename, as_attachment=True)
+
+
+@app.route('/attachment/<int:attachment_id>/delete', methods=['POST'])
+@login_required
+def delete_attachment(attachment_id):
+    attachment = Attachment.query.get(attachment_id)
+    if not attachment or attachment.task.user_id != current_user.id:
+        return '404'
+
+    # delete file from filesystem
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], attachment.filename)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+    db.session.delete(attachment)
+    db.session.commit()
+
+    flash('Attachment deleted successfully!')
+    return redirect(request.referrer)
 
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
@@ -170,18 +232,37 @@ def profile():
             elif not new_password == confirm_password:
                 error = 'New password and confirmed password do not match.'
             else:
-                pass
-                # current_user.password = new_password
+                current_user.password = new_password
+
+        # Handle profile picture upload
+        if 'profile_picture' in request.files:
+            if request.files['profile_picture'].filename and request.files['profile_picture'].filename != "" :
+                upload_success, filename = handle_upload(request, 'profile_picture')
+                if upload_success:
+                    current_user.profile_picture = filename
+                else:
+                    error = 'Unable to upload file. Only PNG, JPG, JPEG, and GIF files are supported.'
 
         if error:
-            return render_template('profile.html', error=error)
+            return render_template(
+                template_name_or_list='profile.html',
+                error=error,
+                username=current_user.username,
+                preferred_name=current_user.preferred_name,
+                profile_picture=current_user.profile_picture
+            )
 
         db.session.commit()
         flash('Your profile has been updated!')
 
         return redirect(url_for('index'))
 
-    return render_template('profile.html', username=current_user.username)
+    return render_template(
+        template_name_or_list='profile.html',
+        username=current_user.username,
+        preferred_name=current_user.preferred_name,
+        profile_picture=current_user.profile_picture
+    )
 
 
 @app.route('/delete_account', methods=['POST'])

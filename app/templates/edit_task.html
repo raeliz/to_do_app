@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Title</title>
+    <title>Edit Task</title>
 </head>
 <body>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <label for="title">Title</label>
         <input type="text" id="taskTitle" name="title" required value="{{ task.title }}">
         <label for="description">Description</label>
         <textarea id="taskDescription" name="description">{{ task.description }}</textarea>
+        <label for="attachments">Attachments (Images/PDFs)</label>
+        <input type="file" name="attachments" multiple>
         <button type="submit" id="updateTaskButton">Update Task</button>
     </form>
+
+    <div class="attachments-wrapper">
+        {% for attachment in task.attachments %}
+            <div class="attachment-item">
+                <img src="{{ url_for('static', filename='uploads/' ~ attachment.filename) }}" alt="{{ attachment.filename }}" class="thumbnail">
+                <form method="POST" action="{{ url_for('delete_attachment', attachment_id=attachment.id) }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
 </body>
 </html>
